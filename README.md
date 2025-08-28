@@ -82,7 +82,7 @@ flask db upgrade
 
 5. **Run the app**  
 ```bash
-flask run
+python run.py
 ```
 
 6. Open in browser:  

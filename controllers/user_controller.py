@@ -9,41 +9,6 @@ user_bp = Blueprint('user', __name__)
 
 
 
-# @user_bp.route('/user/book/<int:lot_id>', methods=['GET', 'POST'])
-# @login_required
-# def book_parking_lot(lot_id):
-#     lot = ParkingSpot.query.get_or_404(lot_id)
-    
-#     if request.method == 'POST':
-#         vehicle_no = request.form['vehicle_number']
-        
-#         # Concept: we will assign lowest id spot available in the lot
-#         spot = ParkingSpot.query.filter_by(lot_id=lot_id, is_available=True).order_by(ParkingSpot.spot_number.asc()).first()
-#         if not spot:
-#             flash('No available spots in this lot.', 'danger')
-#             return redirect(url_for('dashboard.user_dashboard'))
-        
-#         # now we will create the booking 
-#         new_booking = Booking(
-#             user_id=current_user.id,
-#             lot_id=lot_id,
-#             spot_id=spot.id,
-#             vehicle_no=vehicle_no,
-#             timestamp=datetime.utcnow(),
-#             status='active'
-#         )
-        
-#         db.session.add(new_booking)
-        
-#         # mark the spot as occupied
-        
-#         spot.status = 'O'
-#         db.session.commit()
-        
-#         flash(f'Successfully booked Spot {spot.spot_number} at {lot.location_name}', 'success')
-#         return redirect(url_for('dashboard.user_dashboard'))
-#     return render_template('book.html', lot=lot)
-
 
 @user_bp.route('/book/<int:lot_id>', methods=['GET', 'POST'])
 @login_required
@@ -78,70 +43,6 @@ def book_parking_lot(lot_id):
 
     return render_template('book.html', lot=lot, spot=available_spot)
 
-
-# @user_bp.route('/user/release/<int:booking_id>', methods=['GET','POST'])
-# @login_required
-# def release_booking(booking_id):
-#     booking = Booking.query.get_or_404(booking_id)
-    
-#     #Ensure the current user owns this booking
-#     if booking.user_id != current_user.id:
-#         flash('Unauthorized action!', 'danger')
-#         return redirect(url_for('dashboard.user_dashboard'))
-    
-#     # if GET request: show release.html with booking info
-#     if request.method == 'GET':
-#         spot = ParkingSpot.query.filter_by(id=booking.spot_id).first()
-#         if not spot:
-#             flash('Parking spot not found.', "danger")
-#             return redirect(url_for('dashboard.user_dashboard'))
-#         release_time = datetime.utcnow()
-#         duration_hours = (release_time - booking.timestamp).total_seconds()/ 3600
-#         duration_hours = max(1, round(duration_hours))
-        
-#         # Cost/hour comes from the AdminSettings or ParkingLot
-#         cost_per_hour = spot.lot.price
-#         total_cost = duration_hours * cost_per_hour
-        
-#         return render_template(
-#             'release.html',
-#             booking=booking,
-#             spot=spot, 
-#             release_time=release_time,
-#             duration_hours=duration_hours,
-#             total_cost=total_cost
-#         )
-    
-#     # if POST request: finalize release
-#     if booking.status != 'active':
-#         flash('This booking is already released.', 'info')
-#         return redirect(url_for('dashboard.user_dashboard'))
-    
-    
-    
-#     # calculation of duration and cost
-#     release_time= datetime.utcnow()
-#     duration_hours=(release_time - booking.timestamp).total_seconds() / 3600
-#     duration_hours = max(1, round(duration_hours))
-#     spot = ParkingSpot.query.filter_by(id=booking.spot_id).first()
-#     cost_per_hour = spot.price
-#     total_cost = duration_hours * cost_per_hour
-    
-#     # update booking 
-#     booking.status = 'released'
-#     booking.release_time = release_time
-#     booking.cost = total_cost
-#     db.session.commit()
-    
-    
-#     # update spot availability
-#     if spot:
-#         spot.status = 'A'
-#         db.session.commit()
-    
-#     flash(f'Booking released! Duration: {duration_hours} hour(s), Cost:  ₹{total_cost:.2f}', 'success')
-#     return redirect(url_for('dashboard.user_dashboard'))
-  
 
 @user_bp.route('/user/release/<int:booking_id>', methods=['GET', 'POST'])
 @login_required
