@@ -166,7 +166,7 @@ python run.py
 
 - 📹 **Project Demo Video** → [Watch here](https://drive.google.com/file/d/16N2a9jaNi8UJuSfdkxspxa9R5pWK4Gy7/view?usp=drive_link)  
 - 📄 **Detailed Report** → [Read here](https://drive.google.com/file/d/1gTLZR2rXtIMQm7XTYcfMtT2Q0gUt-9-Y/view?usp=drive_link)  
-- 🌍 **Deployment URL:** _Coming Soon_ 
+- 🌍 **Deployment URL:** → [Click here](https://vehicle-parking-app-to1m.onrender.com/) 
 ---
 
 ## 🚀 Future Enhancements
