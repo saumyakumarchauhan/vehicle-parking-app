@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: vehicle-parking-app
+    env: python
+    plan: free
+    buildCommand: |
+      pip install -r requirements.txt
+    startCommand: |
+      flask db upgrade && gunicorn app:app
+    autoDeploy: true
+
+envVars:
+  - key: PYTHON_VERSION
+    value: 3.11
+  - key: FLASK_APP
+    value: app.py
+  - key: FLASK_ENV
+    value: production
